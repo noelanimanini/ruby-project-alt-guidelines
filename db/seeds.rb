@@ -11,7 +11,7 @@ end
 end 
 
 # 50.times do 
-#     BookStore.create(name: Faker::JapaneseMedia::SwordArtOnline.location, location: Faker::Address.community,  )
+#     BookStore.create(name: Faker::JapaneseMedia::SwordArtOnline.location, location: Faker::Address.community )
 # end 
 
 puts 'done'
