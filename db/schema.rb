@@ -14,10 +14,11 @@ ActiveRecord::Schema.define(version: 3) do
 
   create_table "book_orders", force: :cascade do |t|
     t.integer "bookstore_id"
+    t.integer "book_id"
   end
 
   create_table "books", force: :cascade do |t|
-    t.string "name"
+    t.string "title"
     t.string "author"
     t.string "genre"
     t.integer "rating"

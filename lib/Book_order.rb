@@ -1,3 +1,4 @@
 class BookOrder < ActiveRecord::Base
-    # has_many :books
+    belongs_to :bookstore
+    has_many :books
 end 
