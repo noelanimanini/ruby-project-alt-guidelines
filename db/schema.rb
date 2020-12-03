@@ -13,8 +13,15 @@
 ActiveRecord::Schema.define(version: 3) do
 
   create_table "book_orders", force: :cascade do |t|
-    t.string "bookstore_id"
+    t.integer "bookstore_id"
     t.integer "book_id"
+  end
+
+  create_table "book_stores", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.string "opening_time"
+    t.string "closing_time"
   end
 
   create_table "books", force: :cascade do |t|
@@ -22,13 +29,6 @@ ActiveRecord::Schema.define(version: 3) do
     t.string "author"
     t.string "genre"
     t.integer "rating"
-  end
-
-  create_table "bookstores", force: :cascade do |t|
-    t.string "name"
-    t.string "location"
-    t.datetime "opening_time"
-    t.datetime "closing_time"
   end
 
 end

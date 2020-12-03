@@ -1,10 +1,10 @@
 class CreateBookstores < ActiveRecord::Migration[5.2]
   def change
-    create_table :bookstores do |t|
+    create_table :book_stores do |t|
       t.string :name
       t.string :location
-      t.datetime :opening_time
-      t.datetime :closing_time
+      t.string :opening_time
+      t.string :closing_time
       
     end
   end
