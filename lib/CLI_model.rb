@@ -1,14 +1,18 @@
 class CommandLineInterface
     def greet
         puts 'Welcome in!'
+        
     end
 
-    def user_input
-        puts "What genre book are you looking for?"
+    def run 
+        puts "What is your name?"
+        name = gets.chomp()
+        puts ("hello" + name)
+        puts "what genre are you looking for"
         genre = gets.chomp()
-        puts ("great choice! " + genre + " is right over here:")
+        puts ("Here is a list of " + genre + " books")
+        Bookstore.find_by(name: "Selmburg")
     end 
 
-end 
- 
 
+end 
