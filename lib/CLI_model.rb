@@ -1,6 +1,14 @@
-def greet
-    puts 'Welcome in! Let us know if you need help finding a book!'
-  end
+class CommandLineInterface
+    def greet
+        puts 'Welcome in!'
+    end
 
-  greet
-  
+    def user_input
+        puts "What genre book are you looking for?"
+        genre = gets.chomp()
+        puts ("great choice! " + genre + " is right over here:")
+    end 
+
+end 
+ 
+
