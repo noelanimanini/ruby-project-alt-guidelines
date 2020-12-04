@@ -1,4 +1,4 @@
 class Book < ActiveRecord::Base
-    belongs_to :book_orders
-    has_many :bookstores, through: :book_orders
+    has_many :book_orders
+    has_many :book_stores, through: :book_orders
 end 

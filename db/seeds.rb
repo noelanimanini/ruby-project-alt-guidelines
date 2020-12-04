@@ -13,7 +13,10 @@ end
 end 
 
 50.times do 
-    BookOrder.create(book_id: Book.all.sample.id, bookstore_id: BookStore.all.sample.id) 
+    BookOrder.create(book_id: Book.all.sample.id, book_store_id: BookStore.all.sample.id) 
 end 
 
+Book.all.each do |book|
+    BookOrder.create(book_id: book.id, book_store_id: BookStore.all.sample.id)
+end 
 puts 'done'
