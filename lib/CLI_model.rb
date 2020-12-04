@@ -19,6 +19,7 @@ class CommandLineInterface
           "Here are your existing orders. Which one would you like to delete?"
         when "4"
           "Here are all your available books"
+          Book.all
         else
           "Have a wonderful day!"
         end
