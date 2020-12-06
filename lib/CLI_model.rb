@@ -2,9 +2,9 @@ class CommandLineInterface
     def greet
         puts "Hello BookStore Owner, what are we doing today?"
         puts "1. Are we ordering more books?"
-        puts "2. Update an existing order"
-        puts "3. Find an order"
-        puts "4. View all books available"
+        puts "2. Do you want to update an existing order?"
+        puts "3. Find a book? Bookstore? Or a book order?"
+        puts "4. View all books available?"
         user_input = gets.chomp
         self.run(user_input)
     end
@@ -12,30 +12,73 @@ class CommandLineInterface
     def run(user_input)
         case user_input
         when "1" 
-          puts "Great! Would you like to order more books from a specific author, title, genre or rating(1-5)?"
-           genre = gets.chomp || title = gets.chomp || rating = gets.chomp || author = gets.chomp
-           #how can i make this more complex to create an order of a book with these three components  that is easy for the user
-          puts "Awesome! Your order is on the way"
+          self.create
         when "2"
-          puts "Here are your most recent orders."
-          puts BookOrder.all.ids
-          puts  "Would you like to add to or delete an existing order? Please enter 'update' or 'delete'"
-          update = gets.chomp || delete = gets.chomp
-          #   update_result = BookOrder.  
-          # if 
-
+          self.update
         when "3"
-          "Here are your existing orders. Which one would you like to delete?"
-
+          self.find
         when "4"
-          "Here are all your available books"
-
+          self.read
         else
           "Have a wonderful day!"
         end
     end 
 
-    def response
-      
+    def create
+        puts "Great! Would you like to create an order from a specific author, title, genre or rating(1-5)?"
+        input1 = gets.chomp
+        puts "Fantastic! Please enter the #{input1} you'd like."
+        input2 = gets.chomp
+        Book.create(title: ("#{input2}"))
+        puts "Awesome! An order of 1 '#{input2}' book have been placed."
+        #my create method works, but the book.create(title:...), I want it to be versatile to author, genre and rating as well. 
+    end
+
+    def update 
+        puts "Here are your most recent orders."
+        puts BookOrder.all.ids
+        puts  "Would you like to add to or delete an existing order?" 
+        puts '1. add'
+        puts '2. delete'
+        user_input2 = gets.chomp
+        user_input2 == "1" ? self.create : self.destroy
     end 
+
+    def destroy
+      puts "We're sorry to hear that you want to delete your book order. Here are all your existing orders:"
+      puts BookOrder.all.ids
+      puts "Which BookOrder ID would you like to delete?"
+      user_input = gets.chomp
+      BookOrder.destroy("#{user_input}")
+    end
+
+    def find
+      puts "Which one would you like to find in the system? Please type 'BookStore', 'Book' or 'Book Order':"
+      puts "1. Bookstore"
+      puts "2. Book"
+      puts "3. Book Order"
+      input = gets.chomp
+        if input == 'BookStore'
+          puts "Here are the existing orders to the following BookStores:"
+          puts BookStore.all.select(:name, :id)
+        elsif input == 'Book'
+          puts "Here are the existing orders for the following Books:"
+          puts BookStore.all.select(:name, :id)
+        elsif input == 'Book Order'
+          puts "Here are the existing Book Orders:"
+          puts BookOrder.all.ids
+        else
+          self.greet
+        end 
+
+    end 
+
+    def read
+      puts "Here are all your available books"
+      book =  Book.all.select(:title, :id)
+      puts book
+      # binding.pry
+    end 
+
+    
 end 
