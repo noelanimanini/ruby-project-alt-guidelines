@@ -30,18 +30,38 @@ class CommandLineInterface
         puts "Fantastic! Please enter the #{input1} you'd like."
         input2 = gets.chomp
         Book.create(title: ("#{input2}"))
-        puts "Awesome! An order of 1 '#{input2}' book have been placed."
+        puts "Awesome! An order of 1 '#{input2}' book has been placed."
         #my create method works, but the book.create(title:...), I want it to be versatile to author, genre and rating as well. 
     end
 
     def update 
         puts "Here are your most recent orders."
         puts BookOrder.all.ids
-        puts  "Would you like to add to or delete an existing order?" 
+        puts  "Would you like to add to, delete or change an existing order?" 
         puts '1. add'
         puts '2. delete'
+        puts '3. change a book or bookstore in a book order?'
         user_input2 = gets.chomp
-        user_input2 == "1" ? self.create : self.destroy
+        # user_input2 == "1" ? self.create : self.destroy
+        if user_input2 == "1" 
+            self.create 
+        elsif user_input2 == "2"
+            self.destroy
+        else user_input2 == "3"
+            self.update2
+        end  
+    end 
+
+    def update2(@str)
+      @str = 'title' && 'author' && 'genre' && 'rating'
+      puts "Change a Book in an order? Type 'Book'"
+      puts "Change a BookStore in an order? Type 'BookStore'"
+      user_input3 = gets.chomp
+      if  user_input3 == 'Book'
+      puts Book.new(@str: "#{user_input3}") 
+      else
+        puts 'donut ask me'
+      end 
     end 
 
     def destroy
@@ -63,7 +83,7 @@ class CommandLineInterface
           puts BookStore.all.select(:name, :id)
         elsif input == 'Book'
           puts "Here are the existing orders for the following Books:"
-          puts BookStore.all.select(:name, :id)
+          puts Book.all.select(:name, :id)
         elsif input == 'Book Order'
           puts "Here are the existing Book Orders:"
           puts BookOrder.all.ids
