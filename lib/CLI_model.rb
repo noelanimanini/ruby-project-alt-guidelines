@@ -27,17 +27,58 @@ class CommandLineInterface
     def create
         puts "Great! Would you like to create an order from a specific author, title, genre or rating(1-5)?"
         input1 = gets.chomp
-        puts "Fantastic! Please enter the #{input1} you'd like."
-        input2 = gets.chomp
-        Book.create(title: ("#{input2}"))
-        puts "Awesome! An order of 1 '#{input2}' book has been placed."
-        #my create method works, but the book.create(title:...), I want it to be versatile to author, genre and rating as well. 
-        #edit the key for passing the input value to be apart of the script. 
+        # Book.create(title:) mass assignment 
+          if input1 == "title"
+            puts "Here are all your titles:"
+            puts Book.all.map {|book| book.title}
+            puts "Which title would you like to create another order of?"
+            input2 = gets.chomp
+            bo1 = Book.find_by(title: "#{input2}").book_orders
+            BookOrder.create(book_id: bo1)
+            puts "Fantastic! an order of '#{input2}' has been created."
+          elsif input1 == "author"
+            puts "Here are all your authors:"
+            puts Book.all.map {|book| book.author}
+            puts "Which author would you like to create another order of?"
+            input2 = gets.chomp
+            bo1 = Book.find_by(author: "#{input2}").book_orders
+            BookOrder.create(book_id: bo1)
+            puts "Fantastic! an order of '#{input2}' has been created."
+          elsif input1 == "genre"
+            puts "Here are all your genre:"
+            puts Book.all.map {|book| book.genre}
+            puts "Which genre would you like to create another order of?"
+            input2 = gets.chomp
+            bo1 = Book.find_by(genre: "#{input2}").book_orders
+            BookOrder.create(book_id: bo1)
+            puts "Fantastic! an order of '#{input2}' has been created."
+          elsif input1 == "rating"
+            puts "Here are all your ratings:"
+            puts 1
+            puts 2
+            puts 3
+            puts 4
+            puts 5
+            puts "Which rating would you like to create another order of?"
+            input2 = gets.chomp
+            bo1 = Book.find_by(rating: "#{input2}").book_orders
+            BookOrder.create(book_id: bo1)
+            puts "Fantastic! a book order with the rating'#{input2}' has been created."
+          else
+            exit!
+          end 
+        # puts "Fantastic! Please enter the #{input1} you'd like."
+        # input2 = gets.chomp
+        # Book.create(title: ("#{input2}"))
+        # puts "Awesome! An order of 1 '#{input2}' book has been placed."
+        # puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+          # input = gets.chomp
+          # input == 'exit' ? exit! : self.greet
     end
 
     def update 
         puts "Here are your most recent orders."
-        puts BookOrder.all.ids
+        BookOrder.all.each {|order| puts "Order id: #{order.id} Book: #{order.book.title} Store: #{order.book_store.name}"} 
         puts  "Would you like to add, delete or change an order?" 
         puts '1. add'
         puts '2. delete'
@@ -55,7 +96,7 @@ class CommandLineInterface
 
     def update2
       puts "Here are all of your current book orders (id)"
-      puts BookOrder.all.pluck(:id) 
+      BookOrder.all.each {|order| puts "Order id: #{order.id} Book: #{order.book.title} Store: #{order.book_store.name}"} 
       puts "Would you like to see which order has what books? Please input the id of the order you'd like to see"
       input = gets.chomp
       puts "Great! We have found the order, '#{input}' with their resepctive books"
@@ -75,6 +116,9 @@ class CommandLineInterface
           input7 = gets.chomp
           bo2.update(book_id: "#{input7}")
           puts "Great! Your book id for this order, '#{input}', has been updated!'"
+          puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+          input = gets.chomp
+          input == 'exit' ? exit! : self.greet
 
         else input5 == 'Bookstore'
           puts "Here are the bookstores with their ID's and their names. If you would like to change the book order '#{input}', please input the current bookstore id."
@@ -86,11 +130,12 @@ class CommandLineInterface
           input9 = gets.chomp
           bo3.update(book_id: "#{input9}")
           puts "Great! Your book id for this order, '#{input}', has been updated!'"
+          puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+          input = gets.chomp
+          input == 'exit' ? exit! : self.greet
         end 
 
     end 
-
-  
 
     def destroy
       puts "We're sorry to hear that you want to delete your book order. Here are all your existing orders:"
@@ -98,6 +143,10 @@ class CommandLineInterface
       puts "Which BookOrder ID would you like to delete?"
       user_input = gets.chomp
       BookOrder.destroy("#{user_input}")
+      puts "Your order has been deleted!"
+      puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+      input = gets.chomp
+      input == 'exit' ? exit! : self.greet
     end
 
     def find
@@ -109,12 +158,27 @@ class CommandLineInterface
         if input == 'BookStore'
           puts "Here are the existing orders to the following BookStores:"
           puts BookStore.all.pluck(:name, :id)
+          puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+          input = gets.chomp
+          input == 'exit' ? exit! : self.greet
         elsif input == 'Book'
-          puts "Here are the existing orders for the following Books:"
+          puts "Here are the existing orders for the following Books:" 
           puts Book.all.pluck(:title, :id)
+          puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+          input = gets.chomp
+          input == 'exit' ? exit! : self.greet
         elsif input == 'Book Order'
           puts "Here are the existing Book Orders:"
-          puts BookOrder.all.ids
+          puts BookOrder.all.pluck(:id)
+          puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+          input = gets.chomp
+          input == 'exit' ? exit! : self.greet
+          # puts "Which order would you like to see?"
+          # input2 = gets.chomp
+          # bo1 = BookOrder.find("#{input2}").book
+          # bo2 = BookOrder.find("#{input2}").book_store
+          # bo1.pluck
+          # p bo2
         else
           self.greet
         end 
@@ -123,9 +187,11 @@ class CommandLineInterface
 
     def read
       puts "Here are all your available books"
-      book =  Book.all.pluck(:title, :id)
-      puts book
-      # binding.pry
+      book =  Book.all.pluck(:title)
+      puts "Would you like to order more books? Please enter 'yes' or 'no'"
+      input = gets.chomp 
+      input == 'yes' ? self.create : self.greet
+    
     end 
 
     
