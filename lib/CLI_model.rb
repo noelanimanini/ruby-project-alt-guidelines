@@ -38,10 +38,10 @@ class CommandLineInterface
     def update 
         puts "Here are your most recent orders."
         puts BookOrder.all.ids
-        puts  "Would you like to add, delete or change an delivery location?" 
+        puts  "Would you like to add, delete or change an order?" 
         puts '1. add'
         puts '2. delete'
-        puts '3. Change a delivery location?'
+        puts '3. change an order '
         user_input2 = gets.chomp
         # user_input2 == "1" ? self.create : self.destroy
         if user_input2 == "1" 
@@ -56,14 +56,37 @@ class CommandLineInterface
     def update2
       puts "Here are all of your current book orders (id)"
       puts BookOrder.all.pluck(:id) 
-      puts "Which order would you like to update? Please enter the id of the order"
+      puts "Would you like to see which order has what books? Please input the id of the order you'd like to see"
       input = gets.chomp
-      puts "Great! Here is the book store id and the book id for this respective order. Would you like to change the bookstore or book id?"
-      puts BookOrder.pluck("#{input}")
+      puts "Great! We have found the order, '#{input}' with their resepctive books"
+        bo1 = BookOrder.find("#{input}").book_id
+        puts Book.find(bo1).title
+      puts "Would you like to change the book or bookstore?"  
+      puts 'Book'
+      puts 'Bookstore'
+      input5 = gets.chomp
+        if input5 == 'Book'
+          puts "Here are the books you have in stock with their ID's and their titles. Would you like to change the book order '#{input}'? Please input the book id."
+          puts Book.all.pluck(:id, :title)
+          input6 = gets.chomp
+          bo2 = Book.find("#{input6}").book_orders
+          
+          # bo2.update(book_id: "#{input6}")
+          # puts "The order has been updated!"
+        else input5 == 'Bookstore'
+          puts 'donut'
+        end 
+      # puts "Great! Here is the book store id and the book id for this respective order. Would you like to change the bookstore or book id?"
+      # puts Book.all.pluck(:title) 
+      
+      #1.with the user input, find the bookorder they want to update. 
+      #2. next, use the instance update method on the book order you found. 
+      # Book.all.select do |input| 
+      #   BookOrder.create(book_id: "#{input}" )
+
     end 
 
-    # Book.create()
-    #BookOrder.find(#{user_input}book.title)
+  
 
     def destroy
       puts "We're sorry to hear that you want to delete your book order. Here are all your existing orders:"
@@ -96,7 +119,7 @@ class CommandLineInterface
 
     def read
       puts "Here are all your available books"
-      book =  Book.all.select(:title, :id)
+      book =  Book.all.pluck(:title, :id)
       puts book
       # binding.pry
     end 
