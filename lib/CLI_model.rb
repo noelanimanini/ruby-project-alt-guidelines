@@ -66,23 +66,27 @@ class CommandLineInterface
       puts 'Bookstore'
       input5 = gets.chomp
         if input5 == 'Book'
-          puts "Here are the books you have in stock with their ID's and their titles. Would you like to change the book order '#{input}'? Please input the book id."
+          puts "Here are the books you have in stock with their ID's and their titles. If you would like to change the book order '#{input}', please input the current book id."
           puts Book.all.pluck(:id, :title)
           input6 = gets.chomp
           bo2 = Book.find("#{input6}").book_orders
-          
-          # bo2.update(book_id: "#{input6}")
-          # puts "The order has been updated!"
+          puts "Awesome! Now please input the new book id:"
+          puts Book.all.pluck(:id, :title)
+          input7 = gets.chomp
+          bo2.update(book_id: "#{input7}")
+          puts "Great! Your book id for this order, '#{input}', has been updated!'"
+
         else input5 == 'Bookstore'
-          puts 'donut'
+          puts "Here are the bookstores with their ID's and their names. If you would like to change the book order '#{input}', please input the current bookstore id."
+          puts BookStore.all.pluck(:id, :name)
+          input8 = gets.chomp
+          bo3 = BookStore.find("#{input8}").book_orders
+          puts "Awesome! Now please input the new bookstore id:"
+          puts BookStore.all.pluck(:id, :name)
+          input9 = gets.chomp
+          bo3.update(book_id: "#{input9}")
+          puts "Great! Your book id for this order, '#{input}', has been updated!'"
         end 
-      # puts "Great! Here is the book store id and the book id for this respective order. Would you like to change the bookstore or book id?"
-      # puts Book.all.pluck(:title) 
-      
-      #1.with the user input, find the bookorder they want to update. 
-      #2. next, use the instance update method on the book order you found. 
-      # Book.all.select do |input| 
-      #   BookOrder.create(book_id: "#{input}" )
 
     end 
 
