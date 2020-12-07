@@ -1,0 +1,16 @@
+book1 = Book.new("Dory")
+
+def book1.book_order_update
+  
+end
+
+book1_clone = book1.clone
+
+original = %w(apple orange banana)
+copy     = original.clone
+original.map(&:object_id)
+# [23506500, 23506488, 23506476]
+copy.map(&:object_id)
+
+
+

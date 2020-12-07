@@ -32,15 +32,16 @@ class CommandLineInterface
         Book.create(title: ("#{input2}"))
         puts "Awesome! An order of 1 '#{input2}' book has been placed."
         #my create method works, but the book.create(title:...), I want it to be versatile to author, genre and rating as well. 
+        #edit the key for passing the input value to be apart of the script. 
     end
 
     def update 
         puts "Here are your most recent orders."
         puts BookOrder.all.ids
-        puts  "Would you like to add to, delete or change an existing order?" 
+        puts  "Would you like to add, delete or change an delivery location?" 
         puts '1. add'
         puts '2. delete'
-        puts '3. change a book or bookstore in a book order?'
+        puts '3. Change a delivery location?'
         user_input2 = gets.chomp
         # user_input2 == "1" ? self.create : self.destroy
         if user_input2 == "1" 
@@ -52,17 +53,17 @@ class CommandLineInterface
         end  
     end 
 
-    def update2(@str)
-      @str = 'title' && 'author' && 'genre' && 'rating'
-      puts "Change a Book in an order? Type 'Book'"
-      puts "Change a BookStore in an order? Type 'BookStore'"
-      user_input3 = gets.chomp
-      if  user_input3 == 'Book'
-      puts Book.new(@str: "#{user_input3}") 
-      else
-        puts 'donut ask me'
-      end 
+    def update2
+      puts "Here are all of your current book orders (id)"
+      puts BookOrder.all.pluck(:id) 
+      puts "Which order would you like to update? Please enter the id of the order"
+      input = gets.chomp
+      puts "Great! Here is the book store id and the book id for this respective order. Would you like to change the bookstore or book id?"
+      puts BookOrder.pluck("#{input}")
     end 
+
+    # Book.create()
+    #BookOrder.find(#{user_input}book.title)
 
     def destroy
       puts "We're sorry to hear that you want to delete your book order. Here are all your existing orders:"
@@ -80,10 +81,10 @@ class CommandLineInterface
       input = gets.chomp
         if input == 'BookStore'
           puts "Here are the existing orders to the following BookStores:"
-          puts BookStore.all.select(:name, :id)
+          puts BookStore.all.pluck(:name, :id)
         elsif input == 'Book'
           puts "Here are the existing orders for the following Books:"
-          puts Book.all.select(:name, :id)
+          puts Book.all.pluck(:title, :id)
         elsif input == 'Book Order'
           puts "Here are the existing Book Orders:"
           puts BookOrder.all.ids
