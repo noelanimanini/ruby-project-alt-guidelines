@@ -1,6 +1,8 @@
 require_relative '../config/environment'
 
 
-# cli = CommandLineInterface.new
-# cli.greet 
-CommandLineInterface.new.greet
+cli = CommandLineInterface.new
+user = cli.greet 
+cli.main(user)
+
+# CommandLineInterface.new.greet

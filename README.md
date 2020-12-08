@@ -2,7 +2,7 @@ BookMeet
 
 Welcome! BookMeet can help you track what books you have and which bookstore has what book in the area! Want to order more books? BookMeet. Want to update an existing order? BookMeet. Want to find a bookstore, book or book order?! BookMeet! 
 
-BookMeet was designed to help the average bookstore owner with their day-to-day queries: from finding books/bookstores, to adding or deleting orders, BookMeet can help! 
+BookMeet was designed to help the average user with their day-to-day queries: from finding books/bookstores, to adding or deleting orders, BookMeet can help! 
 
 Prerequisites
 
@@ -26,6 +26,6 @@ Installation
   * First, type 'bundle install' into the terminal to install all of the gems needed. 
   * Next, type 'ruby bin/run.rb' to run the program! 
 
-  Acknowledgement 
+Acknowledgement 
   * I want to thank my instructors Ix, Adam, cohort members Ange, Jeremy, Sin, and Michael for helping me out on this project. 
 
