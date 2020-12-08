@@ -1,0 +1,25 @@
+def update2(user)
+    puts "Here are all of your current book orders (id)"
+    BookOrder.all.each {|order| puts "Order id: #{order.id} Book: #{order.book.title} Store: #{order.book_store.name}"} 
+    puts "Please choose which order you'd like to update"
+    input = gets.chomp
+    puts "Great! We have found the order, '#{input}' with their resepctive books"
+      bo1 = BookOrder.find("#{input}").book_id
+      bo2 = BookOrder.find("#{input}").book_store_id
+      puts Book.find(bo1).title
+    puts "Would you like to change the book or bookstore?"  
+    puts 'Book'
+    puts 'Bookstore'
+    input5 = gets.chomp
+      if input5 == 'Book'
+        puts "If you would like to change the book order book, '#{Book.find(bo1).title}', please input this book's id number: #{bo1}, to change the order."
+        input6 = gets.chomp
+        bo2 = Book.find("#{input6}").book_orders
+        puts "Awesome! Now please input the new book id:"
+        BookOrder.all.each {|order| puts "Book: #{order.book.title} Book ID: #{order.book_id}"}
+        input7 = gets.chomp
+        bo2.update(book_id: input7)
+        puts "Great! Your book id for this order, '#{input}', has been updated!'"
+        puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+        input = gets.chomp
+        input == 'exit' ? exit! : self.main(user)

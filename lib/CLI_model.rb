@@ -6,6 +6,7 @@ class CommandLineInterface
         puts "2. Do you want to update an existing order?"
         puts "3. Find a Book? Bookstore? Or a book order?"
         puts "4. View all books available?"
+        puts "5. To exit"
         user_input = gets.chomp
         self.run(user_input, user)
 
@@ -35,6 +36,8 @@ class CommandLineInterface
           self.find_books(user)
         when "4"
           self.read_books(user)
+        when "5"
+          exit!
         else
           "Have a wonderful day!"
         end
@@ -116,9 +119,9 @@ class CommandLineInterface
         if user_input2 == "1" 
             self.create_books(user)
         elsif user_input2 == "2"
-            self.destroy_books
+            self.destroy_books(user)
         elsif user_input2 == "3"
-            self.update2
+            self.update2(user)
         else 
           puts "To exit the program, please type 'exit'.  Otherwise, press any button"
           input = gets.chomp
@@ -168,21 +171,21 @@ class CommandLineInterface
 
     end 
 
-    def destroy_books
+    def destroy_books(user)
       puts "We're sorry to hear that you want to delete your book order. Here are all your existing orders:"
       BookOrder.all.each {|order| puts "Order id: #{order.id} Book: #{order.book.title} Store: #{order.book_store.name}"}
       puts "Which BookOrder ID would you like to delete?"
       user_input = gets.chomp
       BookOrder.destroy("#{user_input}")
       puts "Your order has been deleted!"
-      puts "To exit the program, please type 'exit'.  Otherwise, press any button"
+      puts "To exit the program, please type 'exit'. Otherwise, press any button"
       input = gets.chomp
       input == 'exit' ? exit! : self.main(user)
     end
 
     def find_books(user)
       puts "Which one would you like to find in the system? Please type 'BookStore', 'Book' or 'Book Order':"
-      puts "1. Bookstore"
+      puts "1. BookStore"
       puts "2. Book"
       puts "3. Book Order"
       input = gets.chomp
